@@ -1,3 +1,17 @@
+const mysql = require('mysql');
+const mysqlConnection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '123456',
+  database: 'meanstack'
+});
+mysqlConnection.connect((err) => {
+  if (err) throw err;
+  console.log('Connected!');
+});
+
+
+
 var mongoose = require('mongoose');
 var gracefulShutdown;
 var dbURI = 'mongodb://localhost/meanAuth';

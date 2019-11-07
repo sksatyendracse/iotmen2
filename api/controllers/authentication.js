@@ -32,6 +32,21 @@ module.exports.register = function(req, res) {
     });
   });
 
+
+  var saltget = crypto.randomBytes(16).toString('hex');
+  var hashget = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
+  const employee = { name: req.body.name, email: req.body.email, salt: saltget, hash: hashget};
+  mysqlConnection.query('INSERT INTO users SET ?', employee, (err, res) => {
+    if(err) throw err;
+
+    var token;
+    token = generateJwtMysql;
+    res.status(200);
+    res.json({
+      "token" : token
+    });
+  });
+
 };
 
 module.exports.login = function(req, res) {
